@@ -1,0 +1,2 @@
+Order sensitive: ae AE oe OE th TH tm
+Case sensitive:  ['`^"~*][aeinouy] oe ae c, o/ th d-

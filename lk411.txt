@@ -1,0 +1,14 @@
+LK411-AA US/UK Rev B01
+Same as my lk411.kbf key positions (but wrong characters generated)
+
+3# -sterling
+F1 Hold
+F2 Print
+F3 Set-Up
+F5 Break
+F18 -> 0x137 Print Scrn
+F19 -> 0x46 Scroll Lock
+F20 -> 0x45 Pause
+`(ESC)~
+Compose Character - Alt Function - Space - Alt Function - Compose Character
+F1 - F14 - Help - Do - F17 - F20
