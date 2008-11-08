@@ -25,7 +25,7 @@
 /*
 * Include the basis of all keyboard table values
 */
-#include <kbd.h>
+#include "kbd.h"
 
 #ifndef KBD_VERSION
 # define KBD_VERSION 0

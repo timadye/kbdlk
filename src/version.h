@@ -1,14 +1,1 @@
-#undef  VER_PRODUCTNAME_STR
-#undef  VER_PRODUCTVERSION_STR
-#undef  VER_PRODUCTVERSION
-#undef  VER_COMPANYNAME_STR
-
-#define VER_FILEDESCRIPTION_STR   "US DEC LKxxx-style Keyboard Layout"
-#define VER_INTERNALNAME_STR      "kbdlk"
-#define VER_PRODUCTNAME_STR       VER_FILEDESCRIPTION_STR
-#define VER_COMPANYNAME_STR       "Tim Adye"
-#define VER_LEGALCOPYRIGHT_STR    "Copyright (C) " VER_COMPANYNAME_STR " 2001"
-#define VER_PRODUCTVERSION_STR    "1.0.0.1 based on MS W2K DDK (7/8/00) kbdus.dll template 5.0.2195.1620"
-#define VER_PRODUCTVERSION        1,0,0,1
-
-#define KBDLK_VERSION 1.0.0.1
+#define KBDLK_VERSION 1.0.0.2

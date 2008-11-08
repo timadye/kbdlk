@@ -13,7 +13,6 @@
 
 #include <windows.h>
 #include "kbdlk.h"
-//#include <ddk/ntddk.h>
 
 #if KBD_VERSION >= 1
 #if defined(_M_IA64)

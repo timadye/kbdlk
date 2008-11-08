@@ -1,9 +1,0 @@
-#include <windows.h>
-#include <ntverp.h>
-
-#define VER_ORIGINALFILENAME_STR  VER_INTERNALNAME_STR ".dll"
-#define VER_FILETYPE              VFT_DLL
-#define VER_FILESUBTYPE           VFT2_UNKNOWN
-
-#include "version.h"
-#include "common.ver"
