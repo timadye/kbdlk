@@ -25,5 +25,6 @@ CHDIR ..\wow64
 call %~dp0buildarch.bat wow64 ..\..\src\%1 %2
 CHDIR ..\..\setup
 XCOPY * ..\built\ /Y
+rem ECHO F | XCOPY "%ProgramFiles(x86)%\Microsoft Keyboard Layout Creator 1.4\bin\i386\kbdsetup.exe" ..\built\setup.exe /Y
 :END
 ENDLOCAL

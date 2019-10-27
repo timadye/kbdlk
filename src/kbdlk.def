@@ -1,6 +1,4 @@
 LIBRARY kbdlk
-
-EXPORTS
+ 
+ EXPORTS 
     KbdLayerDescriptor @1
-
-

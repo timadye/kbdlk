@@ -1,17 +1,15 @@
 /****************************** Module Header ******************************\
-* Module Name: KBDLK.H
+* Module Name: kbdlk.H
 *
-* Based on template KBDUS.H from Windows 2000 DDK:-
+* keyboard layout header
 *
-* keyboard layout header for United States
-*
-* Copyright (c) 1985-99, Microsoft Corporation
+* Copyright (c) 1985-2001, Microsoft Corporation
 *
 * Various defines for use by keyboard input code.
 *
 * History:
-*
-* created by KBDTOOL v3.09 Thu May 27 15:17:36 1999
+* Based on KBDUS.C created by:
+* created by KBDTOOL v3.40 Tue Oct 01 00:39:42 2019
 *
 \***************************************************************************/
 
@@ -26,10 +24,6 @@
 * Include the basis of all keyboard table values
 */
 #include "kbd.h"
-
-#ifndef KBD_VERSION
-# define KBD_VERSION 0
-#endif
 
 //#define KBDLK_TEST   1
 
@@ -120,7 +114,6 @@
 # define X38 _EQ(       COMPOSE           )
 
 #elif KBDLK_LAYOUT == KBDLK_LK411
-
 #undef   T01
 #define  T01 _EQ(       OEM_3             ) // `~
 #undef   T29
@@ -163,5 +156,4 @@
 #undef  X46
 #define X46 _EQ(        SCROLL            )
 #endif
-
 #endif

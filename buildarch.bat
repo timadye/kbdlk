@@ -1,7 +1,7 @@
 @ECHO OFF
 SETLOCAL
 
-set MSKLC=%ProgramFiles%\Microsoft Keyboard Layout Creator 1.4
+set MSKLC=%ProgramFiles(x86)%\Microsoft Keyboard Layout Creator 1.4
 
 IF "%3"=="debug" GOTO DEBUG
 SET echo= 
