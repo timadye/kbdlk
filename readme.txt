@@ -9,7 +9,8 @@ To build, run
 
 This runs buildarch.bat for each architecture. buildarch.bat does the same compilation as MSKLC's kbdutool.exe, but uses my kbdlk.c and kbdlk.h instead of generating one from kbdlk.klc.
 
-This creates a "build" subdirectory. Documentation and installation files are copied from the "setup" subdirectory. setup.exe and the kbdlk_*.msi files were created with MSKLC using kbdlk.klc (just depends on the name - they don't need to be recreated with the DLLs). This is the only use of kbdlk.klc.
+This creates a "build" subdirectory. Documentation and installation files are copied from the "setup" subdirectory.
+setup.exe and the kbdlk_*.msi files were created with the MSKLC GUI using kbdlk.klc (just depends on the name - they don't need to be recreated with the DLLs). This is the only use of kbdlk.klc.
 
 History:
 
