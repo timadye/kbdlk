@@ -20,10 +20,6 @@
 #pragma data_seg(".data")
 #define ALLOC_SECTION_LDATA
 #endif
-#else
-#include "vkoem.h"
-#define ALLOC_SECTION_LDATA
-#endif
 
 /***************************************************************************\
 * ausVK[] - Virtual Scan Code to Virtual Key conversion table
@@ -276,7 +272,7 @@ C2(0xff         ,0      ,COMPOSE  ,COMPOSE  ),
   {0            ,0      ,0        ,0      ZZ}
 };
 
-static ALLOC_SECTION_LDATA VK_TO_WCHARS3 aVkToWch3[] = {
+static ALLOC_SECTION_LDATA VK_TO_WCHARS3X aVkToWch3[] = {
 //                      |         |  Shift  |  Ctrl   |
 //                      |=========|=========|=========|
 C3('1'          ,0      ,'1'      ,'!'      ,WCH_NONE ),
