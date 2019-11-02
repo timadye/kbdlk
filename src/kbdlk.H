@@ -41,8 +41,13 @@
 #if KBDLK_LAYOUT == KBDLK_LK411
 # define KBDLK_SHIFT_COMMA_PERIOD 1
 # define KBDLK_F18F19 1
+# define KBDLK_USBCONV 1
 //# undef  VK_PF1
 //# define VK_PF1 0xD9
+#else
+# undef  KBDLK_SHIFT_COMMA_PERIOD
+# undef  KBDLK_F18F19
+# undef  KBDLK_USBCONV
 #endif
 
 #ifdef DKF_DEAD
@@ -64,6 +69,10 @@
 # endif
 # define COMPOSE       0x00a0    // any unused Unicode value
 # define COMPOSE_STR L"\x00a0"
+#else
+# undef  VK_COMPOSE
+# undef  COMPOSE
+# undef  COMPOSE_STR
 #endif
 
 #if COMPOSE_TYPE == COMPOSE_MOD && VK_COMPOSE == VK_RMENU
@@ -74,6 +83,7 @@
 
 #if   KBDLK_LAYOUT == KBDLK_US
 # define VS_COMPOSE 0x38
+# undef  VS_RCOMPOSE
 #elif KBDLK_LAYOUT == KBDLK_LK411
 # define VS_COMPOSE 0x0F
 # define VS_RCOMPOSE 0x1D

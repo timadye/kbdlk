@@ -334,12 +334,11 @@ C3(VK_OEM_PERIOD,0      ,'.'      ,'.'      ,WCH_NONE ),
 C3(VK_OEM_COMMA ,0      ,','      ,'<'      ,WCH_NONE ),
 C3(VK_OEM_PERIOD,0      ,'.'      ,'>'      ,WCH_NONE ),
 #endif
-#if KBDLK_LAYOUT == KBDLK_LK411
-C3(VK_OEM_102   ,0      ,'<'      ,'>'      ,WCH_NONE ),
-#endif
 C3(VK_OEM_2     ,0      ,'/'      ,'?'      ,WCH_NONE ),
 C3(VK_SPACE     ,0      ,' '      ,' '      ,' '      ),
-#if KBDLK_LAYOUT != KBDLK_LK411
+#if KBDLK_LAYOUT == KBDLK_LK411
+C3(VK_OEM_102   ,0      ,'<'      ,'>'      ,WCH_NONE ),
+#else
 C3(VK_OEM_102   ,0      ,'\\'     ,'|'      ,0x001c   ),
 #endif
 C3(VK_DECIMAL   ,0      ,'.'      ,'.'      ,WCH_NONE ),
@@ -557,9 +556,6 @@ static ALLOC_SECTION_LDATA LIGATUREX aLigature[] = {
   { 0, 0, 0 }
 };
 #endif
-
-// Crashes Windows!!
-// #pragma data_seg("my_data")
 
 static ALLOC_SECTION_LDATA KBDTABLES KbdTables = {
     /*
