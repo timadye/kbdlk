@@ -36,14 +36,10 @@
 
 #define KBDLK_LAYOUT KBDLK_LK411
 
-#define VK_PF1 VK_NUMLOCK
-
 #if KBDLK_LAYOUT == KBDLK_LK411
 # define KBDLK_SHIFT_COMMA_PERIOD 1
 # define KBDLK_F18F19 1
 # define KBDLK_USBCONV 1
-//# undef  VK_PF1
-//# define VK_PF1 0xD9
 #else
 # undef  KBDLK_SHIFT_COMMA_PERIOD
 # undef  KBDLK_F18F19
@@ -79,14 +75,6 @@
 # define USE_ALTGR KLLF_ALTGR
 #else
 # define USE_ALTGR 0
-#endif
-
-#if   KBDLK_LAYOUT == KBDLK_US
-# define VS_COMPOSE 0x38
-# undef  VS_RCOMPOSE
-#elif KBDLK_LAYOUT == KBDLK_LK411
-# define VS_COMPOSE 0x0F
-# define VS_RCOMPOSE 0x1D
 #endif
 
 
@@ -136,11 +124,6 @@
 # undef  X1D
 # define X1D _EQ(       COMPOSE           )
 
-#if VK_PF1 != VK_NUMLOCK
-#undef  T45
-#define T45 _EQ(        PF1               )
-#endif
-
 #undef  T4A
 #define T4A _EQ(        ADD               ) // PF4
 #undef  X4E
@@ -158,7 +141,7 @@
 #undef  X41
 #define X41 _EQ(        F17               )
 
-#if KBDLK_F18F19
+#ifdef KBDLK_F18F19
 #undef  X37
 #define X37 _EQ(        F18               )
 #undef  T46
@@ -166,4 +149,16 @@
 #undef  X46
 #define X46 _EQ(        SCROLL            )
 #endif
+
+#ifdef KBDLK_USBCONV
+#undef  T66
+#define T66 _EQ(        HELP              ) // Help : F15
+#undef  T67
+#define T67 _EQ(        APPS              ) // Do :   F16
+#undef  T7E
+#define T7E _EQ(        SUBTRACT          ) // KP_MINUS
+#undef  X5B
+#define X5B _EQ(        COMPOSE           )
+#endif
+
 #endif

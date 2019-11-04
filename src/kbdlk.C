@@ -49,11 +49,7 @@ static ALLOC_SECTION_LDATA USHORT ausVK[] = {
      *     KBDEXT     - VK_NUMLOCK is an Extended key
      *     KBDMULTIVK - VK_NUMLOCK or VK_PAUSE (without or with CTRL)
      */
-#if VK_PF1 == VK_NUMLOCK
     T45 | KBDEXT | KBDMULTIVK,
-#else
-    T45 | KBDEXT,
-#endif
 
 #if KBDLK_F18F19
     T46,
@@ -90,6 +86,9 @@ static ALLOC_SECTION_LDATA USHORT ausVK[] = {
 };
 
 static ALLOC_SECTION_LDATA VSC_VK aE0VscToVk[] = {
+#if KBDLK_LAYOUT == KBDLK_LK411
+        { 0x0F, X0F | KBDEXT              },  // Compose
+#endif
         { 0x10, X10 | KBDEXT              },  // Speedracer: Previous Track
         { 0x19, X19 | KBDEXT              },  // Speedracer: Next Track
         { 0x20, X20 | KBDEXT              },  // Speedracer: Volume Mute
@@ -99,13 +98,18 @@ static ALLOC_SECTION_LDATA VSC_VK aE0VscToVk[] = {
         { 0x2E, X2E | KBDEXT              },  // Speedracer: Volume Down
         { 0x30, X30 | KBDEXT              },  // Speedracer: Volume Up
         { 0x32, X32 | KBDEXT              },  // Speedracer: Browser Home
-#if KBDLK_LAYOUT == KBDLK_LK411
-        { 0x0F, X0F | KBDEXT              },  // Compose
-#endif
         { 0x1D, X1D | KBDEXT              },  // RControl (US) / RCompose (LK)
         { 0x35, X35 | KBDEXT              },  // Numpad Divide
         { 0x37, X37 | KBDEXT              },  // Snapshot
         { 0x38, X38 | KBDEXT              },  // RMenu
+#if KBDLK_LAYOUT == KBDLK_LK411
+        { 0x3D, X3D | KBDEXT              },  // F13
+        { 0x3E, X3E | KBDEXT              },  // F14
+        { 0x3F, X3F | KBDEXT              },  // F15 / Help
+        { 0x40, X40 | KBDEXT              },  // F16 / Do
+        { 0x41, X41 | KBDEXT              },  // F17
+        { 0x4E, X4E | KBDEXT              },  // Num -
+#endif
         { 0x47, X47 | KBDEXT              },  // Home
         { 0x48, X48 | KBDEXT              },  // Up
         { 0x49, X49 | KBDEXT              },  // Prior
@@ -132,14 +136,6 @@ static ALLOC_SECTION_LDATA VSC_VK aE0VscToVk[] = {
         { 0x1C, X1C | KBDEXT              },  // Numpad Enter
 #if !KBDLK_F18F19
         { 0x46, X46 | KBDEXT              },  // Break (Ctrl + Pause)
-#endif
-#if KBDLK_LAYOUT == KBDLK_LK411
-        { 0x3D, X3D | KBDEXT              },  // F13
-        { 0x3E, X3E | KBDEXT              },  // F14
-        { 0x3F, X3F | KBDEXT              },  // F15 / Help
-        { 0x40, X40 | KBDEXT              },  // F16 / Do
-        { 0x41, X41 | KBDEXT              },  // F17
-        { 0x4E, X4E | KBDEXT              },  // Num -
 #endif
         { 0,      0                       }
 };
@@ -179,9 +175,9 @@ static ALLOC_SECTION_LDATA VK_TO_BIT aVkToBits[] = {
 static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
     &aVkToBits[0],
 #if USE_ALTGR
-    6,
+    7,
 #elif COMPOSE_TYPE == COMPOSE_MOD
-    8,
+    9,
 #else
     2,
 #endif
@@ -192,6 +188,7 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
         1,            // Shift 
         2             // Control 
 #if COMPOSE_TYPE == COMPOSE_MOD
+       ,SHFT_INVALID  // Shift + Control
        ,SHFT_INVALID  //       Alt
        ,SHFT_INVALID  // Shift+Alt
 #if !USE_ALTGR
@@ -441,51 +438,58 @@ static ALLOC_SECTION_LDATA VSC_LPWSTR aKeyNames[] = {
     0x57,    L"F11",
 #endif
     0x58,    L"F12",
-    0x7c,    L"F13",
-    0x7d,    L"F14",
-    0x7e,    L"F15",
-    0x7f,    L"F16",
-    0x80,    L"F17",
-    0x81,    L"F18",
-    0x82,    L"F19",
-    0x83,    L"F20",
-    0x84,    L"F21",
-    0x85,    L"F22",
-    0x86,    L"F23",
-    0x87,    L"F24",
+    0x64,    L"F13",
+    0x65,    L"F14",
+#ifdef KBDLK_USBCONV
+    0x66,    L"Help",
+    0x67,    L"Do",
+#else
+    0x66,    L"F15",
+    0x67,    L"F16",
+#endif
+    0x68,    L"F17",
+    0x69,    L"F18",
+    0x70,    L"F19",
+    0x71,    L"F20",
+    0x72,    L"F21",
+    0x73,    L"F22",
+    0x74,    L"F23",
+    0x76,    L"F24",
+#ifdef KBDLK_USBCONV
+    0x7e,    L"Num -",
+#endif
     0   ,    NULL
 };
 
 static ALLOC_SECTION_LDATA VSC_LPWSTR aKeyNamesExt[] = {
-#ifdef VS_COMPOSE
-    VS_COMPOSE, L"Compose",
-#endif
-#ifdef VS_RCOMPOSE
-    VS_RCOMPOSE, L"Right Compose",
+#if KBDLK_LAYOUT == KBDLK_LK411
+    0x0f,    L"Compose",
 #endif
     0x1c,    L"Num Enter",
+#if KBDLK_LAYOUT == KBDLK_US
     0x1d,    L"Right Ctrl",
+#elif KBDLK_LAYOUT == KBDLK_LK411
+    0x1d,    L"Right Compose",
+#endif
     0x35,    L"Num /",
 #if KBDLK_F18F19
     0x37,    L"F18",
 #else
     0x37,    L"Prnt Scrn",
 #endif
-#if defined(VS_COMPOSE) && VS_COMPOSE != 0x38
+#if KBDLK_LAYOUT == KBDLK_US
+    0x38,    L"Compose",
+#elif KBDLK_LAYOUT == KBDLK_LK411
     0x38,    L"Right Alt",
 #endif
 #if KBDLK_LAYOUT == KBDLK_LK411
-    0x3D,    L"F13",
-    0x3E,    L"F14",
-    0x3F,    L"Help",
+    0x3d,    L"F13",
+    0x3e,    L"F14",
+    0x3f,    L"Help",
     0x40,    L"Do",
     0x41,    L"F17",
 #endif
-#if VK_PF1 == VK_NUMLOCK
     0x45,    L"Num Lock",
-#else
-    0x45,    L"PF1",
-#endif
     0x46,    L"Break",
     0x47,    L"Home",
     0x48,    L"Up",
@@ -502,7 +506,11 @@ static ALLOC_SECTION_LDATA VSC_LPWSTR aKeyNamesExt[] = {
     0x53,    L"Delete",
     0x54,    L"<00>",
     0x56,    L"Help",
+#if KBDLK_LAYOUT == KBDLK_US
     0x5b,    L"Left Windows",
+#elif defined(KBDLK_USBCONV)
+    0x5b,    L"Compose",
+#endif
     0x5c,    L"Right Windows",
     0x5d,    L"Application",
     0   ,    NULL
