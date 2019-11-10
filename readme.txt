@@ -1,4 +1,4 @@
-kbdlk 1.0.1.0 - United States-DEC LKxxx-style Keyboard Layout
+kbdlk 1.1.0.0 - United States-DEC LKxxx-style Keyboard Layout
 =============================================================
 
 kbdlk is built using the tools that come with the Microsoft Keyboard Layout Creator (MSKLC) 1.4. This comes with compiler and everything needed, so you don't need Visual Studio or the DDK. It also allows the creation of i386, IA64, and AMD64 DLLs.
@@ -16,3 +16,4 @@ History:
 
 kbdlk 1.0.0.2 : identical to 1.0.0.1 except that it is now built using the tools that come with MSKLC 1.4.
 kbdlk 1.0.1.0 : update kbdlk.* based on kbdus.* created by MSKLC 1.4.
+kbdlk 1.1.0.0 : Extra keys for PS2-USB converter (KBDLK_USBCONV). Fix F13-24 key names (also applies to kbdus). Add Euro (Compose/e=).
