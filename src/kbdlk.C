@@ -179,16 +179,18 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
 #elif COMPOSE_TYPE == COMPOSE_MOD
     9,
 #else
-    2,
+    3,
 #endif
     {
     //  Modification# //  Keys Pressed
     //  ============= // =============
         0,            // 
         1,            // Shift 
-        2             // Control 
-#if COMPOSE_TYPE == COMPOSE_MOD
-       ,SHFT_INVALID  // Shift + Control
+        2,            // Control 
+#if COMPOSE_TYPE != COMPOSE_MOD
+        3             // Shift + Control
+#else
+        5             // Shift + Control
        ,SHFT_INVALID  //       Alt
        ,SHFT_INVALID  // Shift+Alt
 #if !USE_ALTGR
@@ -231,6 +233,8 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
 # define VK_TO_WCHARS3X VK_TO_WCHARS3
 # define S2 2
 # define S3 3
+//          |         |  Shift  |  Ctrl   |
+//          |=========|=========|=========|
 # define C2(VK,FL,U,S) \
   {VK   ,FL ,U        ,S        }
 # define C3(VK,FL,U,S,C) \
@@ -241,12 +245,14 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
 # define VK_TO_WCHARS3X VK_TO_WCHARS5
 # define S2 5
 # define S3 5
+//          |         |  Shift  |  Ctrl   |Compose  |S+Compose|
+//          |=========|=========|=========|=========|=========|
 # define C2(VK,FL,U,S) \
-  {VK   ,FL ,U        ,S        ,WCH_NONE ,WCH_DEAD ,WCH_DEAD}, \
-  {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S       }
+  {VK   ,FL ,U        ,S        ,WCH_NONE ,WCH_DEAD ,WCH_DEAD }, \
+  {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S        }
 # define C3(VK,FL,U,S,C) \
-  {VK   ,FL ,U        ,S        ,C        ,WCH_DEAD ,WCH_DEAD}, \
-  {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S       }
+  {VK   ,FL ,U        ,S        ,C        ,WCH_DEAD ,WCH_DEAD }, \
+  {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S        }
 #define ZZ ,0,0
 #endif
 
