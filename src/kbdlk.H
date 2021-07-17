@@ -1,15 +1,15 @@
 /****************************** Module Header ******************************\
 * Module Name: kbdlk.H
 *
-* keyboard layout header
+* keyboard layout header for United States
 *
-* Copyright (c) 1985-2001, Microsoft Corporation
+* Copyright (c) 1985-2000, Microsoft Corporation
 *
 * Various defines for use by keyboard input code.
 *
 * History:
 * Based on KBDUS.C created by:
-* created by KBDTOOL v3.40 Tue Oct 01 00:39:42 2019
+* created by KBDTOOL v3.11 Thu Aug 24 18:10:11 2000
 *
 \***************************************************************************/
 
@@ -112,6 +112,7 @@
 # define X38 _EQ(       COMPOSE           )
 
 #elif KBDLK_LAYOUT == KBDLK_LK411
+
 #undef   T01
 #define  T01 _EQ(       OEM_3             ) // `~
 #undef   T29

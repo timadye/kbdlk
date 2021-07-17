@@ -1,13 +1,13 @@
 /***************************************************************************\
 * Module Name: kbdlk.C
 *
-* keyboard layout
+* keyboard layout for United States
 *
-* Copyright (c) 1985-2001, Microsoft Corporation
+* Copyright (c) 1985-2000, Microsoft Corporation
 *
 * History:
 * Based on KBDUS.C created by:
-* KBDTOOL v3.40 - Created  Tue Oct 01 00:39:42 2019
+* KBDTOOL v3.11 - Created  Thu Aug 24 18:10:11 2000
 \***************************************************************************/
 
 #include <windows.h>
@@ -22,7 +22,7 @@
 #endif
 
 /***************************************************************************\
-* ausVK[] - Virtual Scan Code to Virtual Key conversion table
+* ausVK[] - Virtual Scan Code to Virtual Key conversion table for United States
 \***************************************************************************/
 
 static ALLOC_SECTION_LDATA USHORT ausVK[] = {
@@ -150,7 +150,7 @@ static ALLOC_SECTION_LDATA VSC_VK aE1VscToVk[] = {
 *
 * See kbd.h for a full description.
 *
-* The keyboard has only three shifter keys:
+* United States Keyboard has only three shifter keys:
 *     SHIFT (L & R) affects alphabnumeric keys,
 *     CTRL  (L & R) is used to generate control characters
 *     ALT   (L & R) used for generating characters by number with numpad
@@ -179,7 +179,7 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
 #elif COMPOSE_TYPE == COMPOSE_MOD
     9,
 #else
-    2,
+    3,
 #endif
     {
     //  Modification# //  Keys Pressed
@@ -229,30 +229,95 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
 #if COMPOSE_TYPE != COMPOSE_MOD
 # define VK_TO_WCHARS2X VK_TO_WCHARS2
 # define VK_TO_WCHARS3X VK_TO_WCHARS3
+# define VK_TO_WCHARS4X VK_TO_WCHARS4
 # define S2 2
 # define S3 3
+# define S4 4
 # define C2(VK,FL,U,S) \
   {VK   ,FL ,U        ,S        }
 # define C3(VK,FL,U,S,C) \
   {VK   ,FL ,U        ,S        ,C        }
+# define C4(VK,FL,U,S,C,SC) \
+  {VK   ,FL ,U        ,S        ,C        ,SC       }
 #define ZZ
 #else
 # define VK_TO_WCHARS2X VK_TO_WCHARS5
 # define VK_TO_WCHARS3X VK_TO_WCHARS5
+# define VK_TO_WCHARS4X VK_TO_WCHARS6
 # define S2 5
 # define S3 5
+# define S4 6
 # define C2(VK,FL,U,S) \
   {VK   ,FL ,U        ,S        ,WCH_NONE ,WCH_DEAD ,WCH_DEAD}, \
   {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S       }
 # define C3(VK,FL,U,S,C) \
   {VK   ,FL ,U        ,S        ,C        ,WCH_DEAD ,WCH_DEAD}, \
   {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S       }
+# define C4(VK,FL,U,S,C,SC) \
+  {VK   ,FL ,U        ,S        ,C        ,WCH_DEAD ,WCH_DEAD,SC      }, \
+  {0xff ,FL ,WCH_NONE ,WCH_NONE ,WCH_NONE ,U        ,S       ,WCH_NONE}
 #define ZZ ,0,0
 #endif
 
 static ALLOC_SECTION_LDATA VK_TO_WCHARS2X aVkToWch2[] = {
 //                      |         |  Shift  |
 //                      |=========|=========|
+#if KBDLK_LAYOUT != KBDLK_LK411
+C2(VK_OEM_3     ,0      ,'`'      ,'~'      ),
+#endif
+C2('1'          ,0      ,'1'      ,'!'      ),
+C2('3'          ,0      ,'3'      ,'#'      ),
+C2('4'          ,0      ,'4'      ,'$'      ),
+C2('5'          ,0      ,'5'      ,'%'      ),
+C2('7'          ,0      ,'7'      ,'&'      ),
+C2('8'          ,0      ,'8'      ,'*'      ),
+C2('9'          ,0      ,'9'      ,'('      ),
+C2('0'          ,0      ,'0'      ,')'      ),
+C2(VK_OEM_PLUS  ,0      ,'='      ,'+'      ),
+C2('Q'          ,CAPLOK ,'q'      ,'Q'      ),
+C2('W'          ,CAPLOK ,'w'      ,'W'      ),
+C2('E'          ,CAPLOK ,'e'      ,'E'      ),
+C2('R'          ,CAPLOK ,'r'      ,'R'      ),
+C2('T'          ,CAPLOK ,'t'      ,'T'      ),
+C2('Y'          ,CAPLOK ,'y'      ,'Y'      ),
+C2('U'          ,CAPLOK ,'u'      ,'U'      ),
+C2('I'          ,CAPLOK ,'i'      ,'I'      ),
+C2('O'          ,CAPLOK ,'o'      ,'O'      ),
+C2('P'          ,CAPLOK ,'p'      ,'P'      ),
+C2('A'          ,CAPLOK ,'a'      ,'A'      ),
+C2('S'          ,CAPLOK ,'s'      ,'S'      ),
+C2('D'          ,CAPLOK ,'d'      ,'D'      ),
+C2('F'          ,CAPLOK ,'f'      ,'F'      ),
+C2('G'          ,CAPLOK ,'g'      ,'G'      ),
+C2('H'          ,CAPLOK ,'h'      ,'H'      ),
+C2('J'          ,CAPLOK ,'j'      ,'J'      ),
+C2('K'          ,CAPLOK ,'k'      ,'K'      ),
+C2('L'          ,CAPLOK ,'l'      ,'L'      ),
+C2(VK_OEM_1     ,0      ,';'      ,':'      ),
+C2(VK_OEM_7     ,0      ,'\''     ,'\"'     ),
+C2('Z'          ,CAPLOK ,'z'      ,'Z'      ),
+C2('X'          ,CAPLOK ,'x'      ,'X'      ),
+C2('C'          ,CAPLOK ,'c'      ,'C'      ),
+C2('V'          ,CAPLOK ,'v'      ,'V'      ),
+C2('B'          ,CAPLOK ,'b'      ,'B'      ),
+C2('N'          ,CAPLOK ,'n'      ,'N'      ),
+C2('M'          ,CAPLOK ,'m'      ,'M'      ),
+#ifdef KBDLK_SHIFT_COMMA_PERIOD
+C2(VK_OEM_COMMA ,0      ,','      ,','      ),
+#if defined(KBDLK_TEST) && defined(WCH_LGTR)
+C2(VK_OEM_PERIOD,0      ,'.'      ,WCH_LGTR ),
+#else
+C2(VK_OEM_PERIOD,0      ,'.'      ,'.'      ),
+#endif
+#else
+C2(VK_OEM_COMMA ,0      ,','      ,'<'      ),
+C2(VK_OEM_PERIOD,0      ,'.'      ,'>'      ),
+#endif
+#if KBDLK_LAYOUT == KBDLK_LK411
+C2(VK_OEM_102   ,0      ,'<'      ,'>'      ),
+#endif
+C2(VK_OEM_2     ,0      ,'/'      ,'?'      ),
+C2(VK_DECIMAL   ,0      ,'.'      ,'.'      ),
 C2(VK_TAB       ,0      ,'\t'     ,'\t'     ),
 C2(VK_ADD       ,0      ,'+'      ,'+'      ),
 C2(VK_DIVIDE    ,0      ,'/'      ,'/'      ),
@@ -272,78 +337,30 @@ C2(0xff         ,0      ,COMPOSE  ,COMPOSE  ),
 static ALLOC_SECTION_LDATA VK_TO_WCHARS3X aVkToWch3[] = {
 //                      |         |  Shift  |  Ctrl   |
 //                      |=========|=========|=========|
-C3('1'          ,0      ,'1'      ,'!'      ,WCH_NONE ),
-C3('2'          ,0      ,'2'      ,'@'      ,WCH_NONE ),
-C3('3'          ,0      ,'3'      ,'#'      ,WCH_NONE ),
-C3('4'          ,0      ,'4'      ,'$'      ,WCH_NONE ),
-C3('5'          ,0      ,'5'      ,'%'      ,WCH_NONE ),
-C3('6'          ,0      ,'6'      ,'^'      ,WCH_NONE ),
-C3('7'          ,0      ,'7'      ,'&'      ,WCH_NONE ),
-C3('8'          ,0      ,'8'      ,'*'      ,WCH_NONE ),
-C3('9'          ,0      ,'9'      ,'('      ,WCH_NONE ),
-C3('0'          ,0      ,'0'      ,')'      ,WCH_NONE ),
-C3(VK_OEM_MINUS ,0      ,'-'      ,'_'      ,WCH_NONE ),
-C3(VK_OEM_PLUS  ,0      ,'='      ,'+'      ,WCH_NONE ),
-C3('Q'          ,CAPLOK ,'q'      ,'Q'      ,WCH_NONE ),
-C3('W'          ,CAPLOK ,'w'      ,'W'      ,WCH_NONE ),
-C3('E'          ,CAPLOK ,'e'      ,'E'      ,WCH_NONE ),
-C3('R'          ,CAPLOK ,'r'      ,'R'      ,WCH_NONE ),
-C3('T'          ,CAPLOK ,'t'      ,'T'      ,WCH_NONE ),
-C3('Y'          ,CAPLOK ,'y'      ,'Y'      ,WCH_NONE ),
-C3('U'          ,CAPLOK ,'u'      ,'U'      ,WCH_NONE ),
-C3('I'          ,CAPLOK ,'i'      ,'I'      ,WCH_NONE ),
-C3('O'          ,CAPLOK ,'o'      ,'O'      ,WCH_NONE ),
-C3('P'          ,CAPLOK ,'p'      ,'P'      ,WCH_NONE ),
-C3(VK_OEM_4     ,0      ,'['      ,'{'      ,0x001b   ),
-C3(VK_OEM_6     ,0      ,']'      ,'}'      ,0x001d   ),
-C3('A'          ,CAPLOK ,'a'      ,'A'      ,WCH_NONE ),
-C3('S'          ,CAPLOK ,'s'      ,'S'      ,WCH_NONE ),
-C3('D'          ,CAPLOK ,'d'      ,'D'      ,WCH_NONE ),
-C3('F'          ,CAPLOK ,'f'      ,'F'      ,WCH_NONE ),
-C3('G'          ,CAPLOK ,'g'      ,'G'      ,WCH_NONE ),
-C3('H'          ,CAPLOK ,'h'      ,'H'      ,WCH_NONE ),
-C3('J'          ,CAPLOK ,'j'      ,'J'      ,WCH_NONE ),
-C3('K'          ,CAPLOK ,'k'      ,'K'      ,WCH_NONE ),
-C3('L'          ,CAPLOK ,'l'      ,'L'      ,WCH_NONE ),
-C3(VK_OEM_1     ,0      ,';'      ,':'      ,WCH_NONE ),
-C3(VK_OEM_7     ,0      ,'\''     ,'\"'     ,WCH_NONE ),
 #if KBDLK_LAYOUT == KBDLK_LK411
 C3(VK_OEM_3     ,0      ,'`'      ,'~'      ,0x001b   ),
-#else
-C3(VK_OEM_3     ,0      ,'`'      ,'~'      ,WCH_NONE ),
 #endif
+C3(VK_OEM_4     ,0      ,'['      ,'{'      ,0x001b   ),
+C3(VK_OEM_6     ,0      ,']'      ,'}'      ,0x001d   ),
 C3(VK_OEM_5     ,0      ,'\\'     ,'|'      ,0x001c   ),
-C3('Z'          ,CAPLOK ,'z'      ,'Z'      ,WCH_NONE ),
-C3('X'          ,CAPLOK ,'x'      ,'X'      ,WCH_NONE ),
-C3('C'          ,CAPLOK ,'c'      ,'C'      ,WCH_NONE ),
-C3('V'          ,CAPLOK ,'v'      ,'V'      ,WCH_NONE ),
-C3('B'          ,CAPLOK ,'b'      ,'B'      ,WCH_NONE ),
-C3('N'          ,CAPLOK ,'n'      ,'N'      ,WCH_NONE ),
-C3('M'          ,CAPLOK ,'m'      ,'M'      ,WCH_NONE ),
-#ifdef KBDLK_SHIFT_COMMA_PERIOD
-C3(VK_OEM_COMMA ,0      ,','      ,','      ,WCH_NONE ),
-#if defined(KBDLK_TEST) && defined(WCH_LGTR)
-C3(VK_OEM_PERIOD,0      ,'.'      ,WCH_LGTR ,WCH_NONE ),
-#else
-C3(VK_OEM_PERIOD,0      ,'.'      ,'.'      ,WCH_NONE ),
-#endif
-#else
-C3(VK_OEM_COMMA ,0      ,','      ,'<'      ,WCH_NONE ),
-C3(VK_OEM_PERIOD,0      ,'.'      ,'>'      ,WCH_NONE ),
-#endif
-C3(VK_OEM_2     ,0      ,'/'      ,'?'      ,WCH_NONE ),
-C3(VK_SPACE     ,0      ,' '      ,' '      ,' '      ),
-#if KBDLK_LAYOUT == KBDLK_LK411
-C3(VK_OEM_102   ,0      ,'<'      ,'>'      ,WCH_NONE ),
-#else
+#if KBDLK_LAYOUT != KBDLK_LK411
 C3(VK_OEM_102   ,0      ,'\\'     ,'|'      ,0x001c   ),
 #endif
-C3(VK_DECIMAL   ,0      ,'.'      ,'.'      ,WCH_NONE ),
 C3(VK_BACK      ,0      ,'\b'     ,'\b'     ,0x007f   ),
 C3(VK_ESCAPE    ,0      ,0x001b   ,0x001b   ,0x001b   ),
 C3(VK_RETURN    ,0      ,'\r'     ,'\r'     ,'\n'     ),
+C3(VK_SPACE     ,0      ,' '      ,' '      ,' '      ),
 C3(VK_CANCEL    ,0      ,0x0003   ,0x0003   ,0x0003   ),
   {0            ,0      ,0        ,0        ,0      ZZ}
+};
+
+static ALLOC_SECTION_LDATA VK_TO_WCHARS4X aVkToWch4[] = {
+//                      |         |  Shift  |  Ctrl   |S+Ctrl   |
+//                      |=========|=========|=========|=========|
+C4('2'          ,0      ,'2'      ,'@'      ,WCH_NONE ,0x0000   ),
+C4('6'          ,0      ,'6'      ,'^'      ,WCH_NONE ,0x001e   ),
+C4(VK_OEM_MINUS ,0      ,'-'      ,'_'      ,WCH_NONE ,0x001f   ),
+  {0            ,0      ,0        ,0        ,0     ZZ ,0        }
 };
 
 // Put this last so that VkKeyScan interprets number characters
@@ -365,9 +382,10 @@ static ALLOC_SECTION_LDATA VK_TO_WCHARS1 aVkToWch1[] = {
 };
 
 static ALLOC_SECTION_LDATA VK_TO_WCHAR_TABLE aVkToWcharTable[] = {
-    {  (PVK_TO_WCHARS1)aVkToWch3,S3, sizeof(aVkToWch3[0]) },
-    {  (PVK_TO_WCHARS1)aVkToWch2,S2, sizeof(aVkToWch2[0]) },
-    {  (PVK_TO_WCHARS1)aVkToWch1, 1, sizeof(aVkToWch1[0]) },
+    {  (PVK_TO_WCHARS1)aVkToWch3, S3, sizeof(aVkToWch3[0]) },
+    {  (PVK_TO_WCHARS1)aVkToWch4, S4, sizeof(aVkToWch4[0]) },
+    {  (PVK_TO_WCHARS1)aVkToWch2, S2, sizeof(aVkToWch2[0]) },
+    {  (PVK_TO_WCHARS1)aVkToWch1,  1, sizeof(aVkToWch1[0]) },
     {                       NULL, 0, 0                    },
 };
 
