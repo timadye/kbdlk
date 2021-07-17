@@ -112,6 +112,7 @@
 # define X38 _EQ(       COMPOSE           )
 
 #elif KBDLK_LAYOUT == KBDLK_LK411
+
 #undef   T01
 #define  T01 _EQ(       OEM_3             ) // `~
 #undef   T29
