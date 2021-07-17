@@ -186,9 +186,11 @@ static ALLOC_SECTION_LDATA MODIFIERS CharModifiers = {
     //  ============= // =============
         0,            // 
         1,            // Shift 
-        2             // Control 
-#if COMPOSE_TYPE == COMPOSE_MOD
-       ,SHFT_INVALID  // Shift + Control
+        2,            // Control 
+#if COMPOSE_TYPE != COMPOSE_MOD
+        3             // Shift + Control
+#else
+        5             // Shift + Control
        ,SHFT_INVALID  //       Alt
        ,SHFT_INVALID  // Shift+Alt
 #if !USE_ALTGR
